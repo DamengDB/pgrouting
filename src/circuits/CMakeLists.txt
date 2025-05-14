@@ -1,4 +1,4 @@
 ADD_LIBRARY(circuits OBJECT
-    hawickCircuits.c
+    # hawickCircuits.c
     hawickCircuits_driver.cpp
     )

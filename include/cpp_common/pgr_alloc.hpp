@@ -30,19 +30,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 
 #include <string>
+#include "c_types/path_rt.h"
+#include "c_types/routes_t.h"
+#include "c_types/mst_rt.h"
 
-extern "C" {
+// extern "C" {
 
-extern
-void* SPI_palloc(size_t size);
+// extern
+// void* SPI_palloc(size_t size);
 
-extern void *
-SPI_repalloc(void *pointer, size_t size);
+// extern void *
+// SPI_repalloc(void *pointer, size_t size);
 
-extern void
-SPI_pfree(void *pointer);
+// extern void
+// SPI_pfree(void *pointer);
 
-}
+// }
 
 
 /*! \fn pgr_alloc(std::size_t size, T *ptr)
@@ -60,14 +63,21 @@ SPI_pfree(void *pointer);
 
  */
 
+typedef void* (*routing_allocator_t)(size_t size);
+typedef void* (*routing_reallocator_t)(void* mem, size_t size);
+typedef void  (*routing_freeor_t)(void* mem);
+
+extern routing_allocator_t   routing_alloc_var;
+extern routing_reallocator_t routing_realloc_var;
+extern routing_freeor_t      routing_free_var;
 
 template <typename T>
 T*
 pgr_alloc(std::size_t size, T* ptr) {
     if (!ptr) {
-        ptr = static_cast<T*>(SPI_palloc(size * sizeof(T)));
+        ptr = static_cast<T*>(routing_alloc_var(size * sizeof(T)));
     } else {
-        ptr = static_cast<T*>(SPI_repalloc(ptr, size * sizeof(T)));
+        ptr = static_cast<T*>(routing_realloc_var(ptr, size * sizeof(T)));
     }
     return ptr;
 }
@@ -76,12 +86,25 @@ template <typename T>
 T*
 pgr_free(T* ptr) {
     if (ptr) {
-        SPI_pfree(ptr);
+        routing_free_var(ptr);
     }
     return nullptr;
 }
 
 char *
 pgr_msg(const std::string &msg);
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+    void dmr_msg_free(char* msg);
+    void dmr_path_free(Path_rt* path);
+    void dmr_route_free(Routes_t* route);
+    void dmr_mst_free(MST_rt* mst);
+    void routing_set_handlers(routing_allocator_t allocator,
+        routing_reallocator_t reallocator, routing_freeor_t freeor);
+#ifdef __cplusplus
+}
+#endif
 
 #endif  // INCLUDE_CPP_COMMON_PGR_ALLOC_HPP_

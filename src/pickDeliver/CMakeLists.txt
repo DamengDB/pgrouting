@@ -17,8 +17,8 @@ ADD_LIBRARY(pickDeliver OBJECT
 
     pickDeliverEuclidean_driver.cpp
     pickDeliver_driver.cpp
-    pickDeliverEuclidean.c
-    pickDeliver.c
+    # pickDeliverEuclidean.c
+    # pickDeliver.c
 
     pd_problem.cpp
     )

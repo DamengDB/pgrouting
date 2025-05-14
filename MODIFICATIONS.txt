@@ -1,0 +1,36 @@
+==============================================================================
+Project Description
+==============================================================================
+This branch is a modified version based on pgrouting-3.5.0 codebase. Its 
+purpose is to eliminate the dynamic library's dependency on PostgreSQL, 
+allowing it to be compiled into a dynamic library file with only a Boost 
+dependency.
+
+The following modifications are involved:
+
+1. Removed dependencies on Perl, PostgreSQL, and PostGIS from the CMakeLists
+file, and excluded non-essential subprojects such as doc and sql.
+
+2.	Added a .def file under the MSVC environment to resolve function export 
+issues.
+
+3. Modified the installation path for the dynamic library.
+
+4. Removed source file from the src folder that are not part of the driver 
+layer and that depend on PostgreSQL types from the CMake build system.
+
+5. Modified memory management functions and added callback functions to allow
+custom memory management.
+
+6. Added a function to retrieve the dynamic library version and several memory
+release functions for various structures.
+
+7. Removed code from the common module that was used to access PostgreSQL data.
+
+8. Made other modifications necessary to resolve compilation errors.
+
+==============================================================================
+The following files may have been modified by DAMENG.
+==============================================================================
+
+1.src/*/CMakeLists.txt

@@ -1,27 +1,27 @@
 ADD_LIBRARY(common OBJECT
-    postgres_connection.c
-    e_report.c
+    # postgres_connection.c
+    # e_report.c
     #restrict_input.c
     basePath_SSEC.cpp
 
-    points_input.c
-    matrixRows_input.c
-    get_check_data.c
-    edges_input.c
-    combinations_input.c
-    orders_input.c
-    orders_input.c
-    vehicles_input.c
+    # points_input.c
+    # matrixRows_input.c
+    # get_check_data.c
+    # edges_input.c
+    # combinations_input.c
+    # orders_input.c
+    # orders_input.c
+    # vehicles_input.c
 
-    restrictions_input.c
+    # restrictions_input.c
 
-    coordinates_input.c
-    arrays_input.c
-    delauny_input.c
+    # coordinates_input.c
+    # arrays_input.c
+    # delauny_input.c
 
-    check_parameters.c
+    # check_parameters.c
 
-    time_msg.c
+    # time_msg.c
     pgr_assert.cpp
     identifier.cpp
 

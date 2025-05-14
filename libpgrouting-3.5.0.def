@@ -1,0 +1,12 @@
+LIBRARY	libpgrouting-3.5.0
+EXPORTS
+    do_pgr_many_to_many_dijkstra
+    do_pgr_combinations_dijkstra
+    do_pgr_driving_many_to_dist
+    do_pgr_ksp
+    do_pgr_dijkstraVia
+    dmr_msg_free
+    dmr_path_free
+    dmr_route_free
+    routing_set_handlers
+    dmr_version

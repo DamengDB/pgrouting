@@ -2,10 +2,10 @@ ADD_LIBRARY(spanningTree OBJECT
     mst_common.cpp
     details.cpp
 
-    kruskal.c
+    # kruskal.c
     kruskal_driver.cpp
 
-    prim.c
+    # prim.c
     prim_driver.cpp
 
     #randomSpanningTree.c

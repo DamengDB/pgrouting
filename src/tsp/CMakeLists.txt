@@ -1,6 +1,6 @@
 ADD_LIBRARY(tsp OBJECT
-    euclideanTSP.c
-    TSP.c
+    # euclideanTSP.c
+    # TSP.c
     tsp.cpp
 
     TSP_driver.cpp

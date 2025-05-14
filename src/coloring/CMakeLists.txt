@@ -1,9 +1,9 @@
 ADD_LIBRARY(coloring OBJECT
-    sequentialVertexColoring.c
+    # sequentialVertexColoring.c
     sequentialVertexColoring_driver.cpp
-    bipartite.c
+    # bipartite.c
     bipartite_driver.cpp
-    edgeColoring.c
+    # edgeColoring.c
     edgeColoring_driver.cpp
     pgr_edgeColoring.cpp
     )

@@ -1,4 +1,4 @@
 ADD_LIBRARY(bdAstar OBJECT
-    bdAstar.c
+    # bdAstar.c
     bdAstar_driver.cpp
     )

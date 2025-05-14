@@ -35,3 +35,42 @@ pgr_msg(const std::string &msg) {
     return duplicate;
 }
 
+routing_allocator_t routing_alloc_var = malloc;
+routing_reallocator_t routing_realloc_var = realloc;
+routing_freeor_t routing_free_var = free;
+
+void dmr_msg_free(char* msg) {
+    if(msg){
+        routing_free_var(msg);
+    }
+    msg = NULL;
+    return;
+}
+
+void dmr_path_free(Path_rt* path){
+    if(path){
+        routing_free_var(path);
+    }
+    path = NULL;
+}
+
+void dmr_route_free(Routes_t* route){
+    if(route){
+        routing_free_var(route);
+    }
+    route = NULL;
+}
+
+void dmr_mst_free(MST_rt* mst){
+    if(mst){
+        routing_free_var(mst);
+    }
+    mst = NULL;
+}
+
+void routing_set_handlers(routing_allocator_t allocator,
+    routing_reallocator_t reallocator, routing_freeor_t freeor) {
+    if (allocator) routing_alloc_var = allocator;
+    if (reallocator) routing_realloc_var = reallocator;
+    if (freeor) routing_free_var = freeor;
+}

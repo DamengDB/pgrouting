@@ -1,10 +1,10 @@
 ADD_LIBRARY(components OBJECT
-    connectedComponents.c
-	strongComponents.c
-	biconnectedComponents.c
-    articulationPoints.c
-    bridges.c
-    makeConnected.c
+    # connectedComponents.c
+	# strongComponents.c
+	# biconnectedComponents.c
+    # articulationPoints.c
+    # bridges.c
+    # makeConnected.c
 
     makeConnected_driver.cpp
     componentsResult.cpp

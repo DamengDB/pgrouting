@@ -56,15 +56,15 @@ include(pgr/Configure)
 #---------------------------------------------
 set(DOXYGEN_MINIMUM_VERSION "1.7")
 set(SPHINX_MINIMUM_VERSION "4.0")
-set(POSTGRESQL_MINIMUM_VERSION "9.2.0")
+# set(POSTGRESQL_MINIMUM_VERSION "9.2.0")
 set(BOOST_MINIMUM_VERSION "1.56.0")
-set(POSTGIS_MINIMUM_VERSION "2.0.0")
+# set(POSTGIS_MINIMUM_VERSION "2.0.0")
 
 message(STATUS "DOXYGEN_MINIMUM_VERSION=${DOXYGEN_MINIMUM_VERSION}")
 message(STATUS "SPHINX_MINIMUM_VERSION=${SPHINX_MINIMUM_VERSION}")
-message(STATUS "POSTGRESQL_MINIMUM_VERSION=${POSTGRESQL_MINIMUM_VERSION}")
+# message(STATUS "POSTGRESQL_MINIMUM_VERSION=${POSTGRESQL_MINIMUM_VERSION}")
 message(STATUS "BOOST_MINIMUM_VERSION=${BOOST_MINIMUM_VERSION}")
-message(STATUS "POSTGIS_MINIMUM_VERSION=${POSTGIS_MINIMUM_VERSION}")
+# message(STATUS "POSTGIS_MINIMUM_VERSION=${POSTGIS_MINIMUM_VERSION}")
 
 # cmake 3.2 adds unwanted flags
 if(WIN32 AND MSVC)
@@ -157,47 +157,47 @@ endif()
 # Perl
 #---------------------------------------------
 #---------------------------------------------
-include(FindPerl)
-if(NOT PERL_EXECUTABLE)
-    message(FATAL_ERROR "perl NOT FOUND - Please check your Perl installation.")
-endif()
+# include(FindPerl)
+# if(NOT PERL_EXECUTABLE)
+#     message(FATAL_ERROR "perl NOT FOUND - Please check your Perl installation.")
+# endif()
 
 #---------------------------------------------
 #---------------------------------------------
 # PostgreSQL
 #---------------------------------------------
 #---------------------------------------------
-find_package(PostgreSQL)
-if(NOT POSTGRESQL_FOUND OR NOT POSTGRESQL_VERSION_STRING)
-    message(FATAL_ERROR "PostgreSQL not found - Please check your PostgreSQL installation.")
-endif()
+# find_package(PostgreSQL)
+# if(NOT POSTGRESQL_FOUND OR NOT POSTGRESQL_VERSION_STRING)
+#     message(FATAL_ERROR "PostgreSQL not found - Please check your PostgreSQL installation.")
+# endif()
 
 # for XbetaY XalphaY XrcY -> X.Y
-string(REGEX REPLACE "([0-9]+)[beta|alpha|rc|devel].*" "\\1.0" POSTGRESQL_VERSION_STRING ${POSTGRESQL_VERSION_STRING})
-message(STATUS "POSTGRESQL_VERSION_STRING=${POSTGRESQL_VERSION_STRING}")
+# string(REGEX REPLACE "([0-9]+)[beta|alpha|rc|devel].*" "\\1.0" POSTGRESQL_VERSION_STRING ${POSTGRESQL_VERSION_STRING})
+# message(STATUS "POSTGRESQL_VERSION_STRING=${POSTGRESQL_VERSION_STRING}")
 
-STRING(REGEX MATCH "([0-9]+)\.([0-9]+)" POSTGRESQL_VERSION "${POSTGRESQL_VERSION_STRING}")
-message(STATUS "POSTGRESQL_VERSION=${POSTGRESQL_VERSION}")
+# STRING(REGEX MATCH "([0-9]+)\.([0-9]+)" POSTGRESQL_VERSION "${POSTGRESQL_VERSION_STRING}")
+# message(STATUS "POSTGRESQL_VERSION=${POSTGRESQL_VERSION}")
 
 #for X.Y.Z -> XY  Y<10
-string(REGEX REPLACE "^([0-9]+)\\.([0-9]+).*" "\\1\\2" PGSQL_VERSION ${POSTGRESQL_VERSION})
+# string(REGEX REPLACE "^([0-9]+)\\.([0-9]+).*" "\\1\\2" PGSQL_VERSION ${POSTGRESQL_VERSION})
 #message(STATUS "PGSQL_VERSION=${PGSQL_VERSION}")
 
-if("${POSTGRESQL_VERSION}" VERSION_LESS "${POSTGRESQL_MINIMUM_VERSION}")
-    message(FATAL_ERROR " PostgreSQL ${POSTGRESQL_MINIMUM_VERSION} or greater is required.")
-endif("${POSTGRESQL_VERSION}" VERSION_LESS "${POSTGRESQL_MINIMUM_VERSION}")
+# if("${POSTGRESQL_VERSION}" VERSION_LESS "${POSTGRESQL_MINIMUM_VERSION}")
+#     message(FATAL_ERROR " PostgreSQL ${POSTGRESQL_MINIMUM_VERSION} or greater is required.")
+# endif("${POSTGRESQL_VERSION}" VERSION_LESS "${POSTGRESQL_MINIMUM_VERSION}")
 
 #-------
-include_directories(SYSTEM ${POSTGRESQL_INCLUDE_DIR})
-if(WIN32)
-    include_directories(SYSTEM ${POSTGRESQL_INCLUDE_DIR}/port/win32)
-    if(MSVC)
-        include_directories(SYSTEM ${POSTGRESQL_INCLUDE_DIR}/port/win32_msvc/)
-    endif()
-endif()
+# include_directories(SYSTEM ${POSTGRESQL_INCLUDE_DIR})
+# if(WIN32)
+#     include_directories(SYSTEM ${POSTGRESQL_INCLUDE_DIR}/port/win32)
+#     if(MSVC)
+#         include_directories(SYSTEM ${POSTGRESQL_INCLUDE_DIR}/port/win32_msvc/)
+#     endif()
+# endif()
 
-add_definitions(-DPGSQL_VERSION=${PGSQL_VERSION})
-message(STATUS "PGSQL_VERSION=${PGSQL_VERSION}")
+# add_definitions(-DPGSQL_VERSION=${PGSQL_VERSION})
+# message(STATUS "PGSQL_VERSION=${PGSQL_VERSION}")
 
 
 #---------------------------------------------
@@ -211,11 +211,11 @@ include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
 
 #---------------------------------------------
 if (PROJECT_DEBUG)
-    message(STATUS "PERL_VERSION_STRING = ${PERL_VERSION_STRING}")
-    message(STATUS "POSTGRESQL_VERSION is ${PGSQL_VERSION}")
-    message(STATUS "PGSQL_VERSION is ${PGSQL_VERSION}")
+#     message(STATUS "PERL_VERSION_STRING = ${PERL_VERSION_STRING}")
+#     message(STATUS "POSTGRESQL_VERSION is ${PGSQL_VERSION}")
+#     message(STATUS "PGSQL_VERSION is ${PGSQL_VERSION}")
     message(STATUS "Boost_INCLUDE_DIRS = ${Boost_INCLUDE_DIRS}")
-    message(STATUS "POSTGRESQL_INCLUDE_DIR = ${POSTGRESQL_INCLUDE_DIR}")
+#     message(STATUS "POSTGRESQL_INCLUDE_DIR = ${POSTGRESQL_INCLUDE_DIR}")
 endif()
 
 
@@ -229,14 +229,17 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 #---------------------------------------------
 # library directory
 #---------------------------------------------
-execute_process(
-    COMMAND ${POSTGRESQL_PG_CONFIG} --pkglibdir
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    OUTPUT_VARIABLE LIBRARY_INSTALL_PATH)
+# execute_process(
+#     COMMAND ${POSTGRESQL_PG_CONFIG} --pkglibdir
+#     OUTPUT_STRIP_TRAILING_WHITESPACE
+#     OUTPUT_VARIABLE LIBRARY_INSTALL_PATH)
 
-if(NOT LIBRARY_INSTALL_PATH)
-    message(FATAL_ERROR "pg_config --pkglibdir failed to return a value. Please check your PostgreSQL installation!")
-endif()
+# if(NOT LIBRARY_INSTALL_PATH)
+#     message(FATAL_ERROR "pg_config --pkglibdir failed to return a value. Please check your PostgreSQL installation!")
+# endif()
+
+# set install path manually
+set(LIBRARY_INSTALL_PATH "${CMAKE_INSTALL_PREFIX}/lib")
 
 message(STATUS "LIBRARY_INSTALL_PATH ${LIBRARY_INSTALL_PATH}")
 
@@ -244,25 +247,25 @@ message(STATUS "LIBRARY_INSTALL_PATH ${LIBRARY_INSTALL_PATH}")
 # extension directory
 #---------------------------------------------
 
-execute_process(
-    COMMAND ${POSTGRESQL_PG_CONFIG} --sharedir
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-    OUTPUT_VARIABLE SHARE_DIR)
+# execute_process(
+#     COMMAND ${POSTGRESQL_PG_CONFIG} --sharedir
+#     OUTPUT_STRIP_TRAILING_WHITESPACE
+#     OUTPUT_VARIABLE SHARE_DIR)
 
 #-------
-if(SHARE_DIR)
-    set(SHARE_DIR "${SHARE_DIR}/extension")
-else(SHARE_DIR)
-    message(FATAL_ERROR "pg_config --sharedir failed to return a value. Please check your PostgreSQL installation!")
-endif(SHARE_DIR)
+# if(SHARE_DIR)
+#     set(SHARE_DIR "${SHARE_DIR}/extension")
+# else(SHARE_DIR)
+#     message(FATAL_ERROR "pg_config --sharedir failed to return a value. Please check your PostgreSQL installation!")
+# endif(SHARE_DIR)
 
 #---------------------------------------------
 
-if (PROJECT_DEBUG)
-    message(STATUS "POSTGRESQL_LIBRARIES=${POSTGRESQL_LIBRARIES}")
-    message(STATUS "LIBRARY_INSTALL_PATH=${LIBRARY_INSTALL_PATH}")
-    message(STATUS "SHARE_DIR=${SHARE_DIR}")
-endif()
+# if (PROJECT_DEBUG)
+#     message(STATUS "POSTGRESQL_LIBRARIES=${POSTGRESQL_LIBRARIES}")
+#     message(STATUS "LIBRARY_INSTALL_PATH=${LIBRARY_INSTALL_PATH}")
+#     message(STATUS "SHARE_DIR=${SHARE_DIR}")
+# endif()
 
 
 
@@ -270,10 +273,10 @@ endif()
 # Special cases for windows
 #---------------------------------------------
 
-if(WIN32)
-    link_directories(${POSTGRESQL_LIBRARIES})
-    link_libraries(postgres)
-endif()
+# if(WIN32)
+#     link_directories(${POSTGRESQL_LIBRARIES})
+#     link_libraries(postgres)
+# endif()
 
 #-----------------------------------------------------------------------------
 
@@ -407,7 +410,9 @@ add_library(${PROJECT_LIB_NAME}
     ${LIBRARY_MODE_TARGET}
     ${PROJECT_OBJECTS})
 
-
+if(WIN32 AND MSVC)
+    SET_TARGET_PROPERTIES(${PROJECT_LIB_NAME} PROPERTIES LINK_FLAGS /DEF:${CMAKE_SOURCE_DIR}/libpgrouting-3.5.0.def)
+endif()
 
 if(APPLE)
     set_target_properties(${PROJECT_LIB_NAME}
@@ -427,10 +432,10 @@ endif(WIN32 AND MSVC)
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 
-add_subdirectory(sql)
-if (PROJECT_DEBUG)
-    message(STATUS "PROJECT_FILES_TO_INSTALL=${PROJECT_FILES_TO_INSTALL}")
-endif()
+# add_subdirectory(sql)
+# if (PROJECT_DEBUG)
+#     message(STATUS "PROJECT_FILES_TO_INSTALL=${PROJECT_FILES_TO_INSTALL}")
+# endif()
 
 
 #-----------------------------------------------------------------------------
@@ -441,15 +446,15 @@ endif()
 
 
 install(TARGETS ${PROJECT_LIB_NAME} DESTINATION ${LIBRARY_INSTALL_PATH})
-install(FILES
-    ${PROJECT_FILES_TO_INSTALL}
-    DESTINATION "${SHARE_DIR}"
-    )
+# install(FILES
+#     ${PROJECT_FILES_TO_INSTALL}
+#     DESTINATION "${SHARE_DIR}"
+#     )
 
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
 # DOCUMENTATION
 #-----------------------------------------------------------------------------
 #-----------------------------------------------------------------------------
-add_subdirectory(doxygen)
-add_subdirectory(doc)
+# add_subdirectory(doxygen)
+# add_subdirectory(doc)
